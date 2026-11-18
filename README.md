@@ -1,97 +1,78 @@
 # AVEN — School Journey Visibility Platform
 
-**AVEN** is a school journey visibility and monitoring platform designed to help parents and caregivers stay informed about children's journeys to and from school. It combines family management, journey tracking, route monitoring, safety alerts, and communication into one connected system.
+AVEN is a school-journey visibility and monitoring platform concept designed to help parents and caregivers stay informed about children's journeys to and from school. It focuses on school-going children who travel on foot and brings family management, journey tracking, route monitoring, safety alerts, and caregiver communication into one connected system.
 
-The platform provides a backend for managing parent-child relationships, tracking devices, journey information, and notifications, with a focus on security, reliability, and children's privacy.
+The backend manages family relationships, tracking devices, journey information, monitoring events, and notifications. The project places particular emphasis on the security and privacy of children's information and location data.
 
-## 1. Overview
+## The problem
 
-AVEN aims to improve the visibility of children's school journeys by connecting tracking devices, backend monitoring services, administrators, and parents or caregivers.
+When children walk to and from school, caregivers may have limited visibility into whether a journey has started, is progressing as expected, or has been completed. AVEN is intended to provide relevant journey information and alert caregivers when configured safety conditions require attention.
 
-The platform supports a structured approach to family registration, journey management, route monitoring, and communication. Parents can receive relevant journey updates through supported messaging channels, while administrators manage family records and system operations.
+## Core capabilities
 
-## 2. Core Features
+### Family and child management
+- Register a parent or caregiver and child through an administrative workflow.
+- Associate a child with up to two authorized parents or caregivers.
+- Maintain family records, contact details, verification status, and notification preferences.
 
-### Family and Child Management
-- Register a parent and child together through a single administrative workflow.
-- Associate each child with up to two authorized parents or caregivers.
-- Maintain parent-child relationships and family records.
-- Manage contact information, verification status, and notification preferences.
-- Support secure administration of family records.
-
-### Child Journey Tracking
+### Journey tracking
 - Receive GPS coordinates and telemetry from tracking devices.
-- Record journey start times, progress, and completion.
+- Record journey start times, progress, completion, and history.
 - Associate tracking devices with registered children.
-- Maintain journey history and relevant events.
 - Support expected routes, destinations, and journey time windows.
 
-### Route Monitoring and Safety Alerts
-- Monitor journeys against configured routes and time windows.
-- Detect deviations from expected journey patterns.
-- Identify configured safety-related conditions.
-- Generate timely alerts based on deterministic monitoring rules.
-- Maintain event records for review and investigation.
+### Route monitoring and safety events
+- Compare journey activity against configured routes and time windows.
+- Detect configured route deviations and other monitoring conditions.
+- Generate event records and alerts for caregiver or administrator review.
+- Use deterministic monitoring rules for safety-related decisions rather than relying on AI alone.
 
-### Parent Communication and Notifications
-- Deliver journey updates through WhatsApp.
-- Support SMS notifications for eligible phone numbers and devices.
-- Share map links that allow authorized caregivers to view relevant journey information.
-- Send important alerts through supported communication channels.
-- Track notification delivery status and handle failed deliveries.
-- Apply controlled fallback between communication channels while preventing duplicate alerts.
+### Caregiver communication
+- Send journey updates through supported WhatsApp and SMS channels.
+- Share map links with authorized caregivers.
+- Track notification delivery and handle failures.
+- Apply controlled channel fallback while avoiding duplicate notifications.
 
-### Administrator Management
-- Provide secure administrator authentication using JWT Bearer tokens.
-- Protect administrative endpoints through authentication and authorization.
-- Manage parent, child, device, and journey records.
-- Support operational visibility into journey events and notification delivery.
+### Administration and security
+- Authenticate administrators using JWT Bearer tokens.
+- Protect administrative operations with authentication and authorization.
+- Hash passwords and keep credentials outside source control.
+- Restrict access to sensitive family and location information.
+- Support contact verification, notification preferences, and time-limited location sharing.
 
-### Security and Privacy
-- Hash passwords securely.
-- Store secrets and database credentials outside source code.
-- Restrict access to sensitive family and location data.
-- Verify contact details and respect notification consent.
-- Use secure, time-limited location-sharing links.
-- Apply appropriate access controls, data validation, and error handling.
-- Design safety-critical alerts around deterministic rules rather than relying on AI alone.
-
-## 3. Technology Stack
+## Technology stack
 
 | Technology | Purpose |
 |---|---|
-| Python | Backend programming language |
-| FastAPI | REST API framework |
-| SQLAlchemy | Database ORM and persistence |
+| Python | Backend language |
+| FastAPI | REST API |
+| SQLAlchemy | Database ORM |
 | PostgreSQL | Relational database |
-| Neon | Hosted PostgreSQL database |
+| Neon | Hosted PostgreSQL option |
 | Pydantic | Request validation and response schemas |
-| PyJWT | JWT access-token handling |
-| pwdlib with Argon2 | Password hashing and verification |
-| Uvicorn | ASGI application server |
-| Git and GitHub | Version control and source hosting |
+| PyJWT | JWT handling |
+| pwdlib / Argon2 | Password hashing |
+| Uvicorn | ASGI server |
 
-## 4. System Architecture
+## Backend architecture
 
-AVEN follows a layered backend architecture that separates HTTP handling, business logic, database operations, and data validation.
+The backend uses a layered structure to separate responsibilities:
 
-- **Routers:** Define API endpoints, process requests, and return HTTP responses.
-- **Services:** Implement business rules and coordinate workflows.
-- **Repositories:** Encapsulate database queries and persistence operations.
-- **Models:** Represent database entities and relationships.
-- **Schemas:** Validate incoming requests and define response structures.
-- **Core:** Contains application configuration and security dependencies.
+- **Routers** define HTTP endpoints and handle requests.
+- **Services** implement application workflows and business rules.
+- **Repositories** encapsulate database queries and persistence.
+- **Models** define database entities and relationships.
+- **Schemas** validate incoming data and shape API responses.
+- **Core** contains configuration and security utilities.
 
-This structure helps keep the backend modular, testable, maintainable, and easier to extend.
+This separation makes the application easier to test, maintain, and extend.
 
-## 5. Project Structure
+## Project structure
 
 ```text
 Aven_project/
 ├── app/
 │   ├── core/
-│   │   ├── config.py
-│   │   └── security.py
 │   ├── models/
 │   ├── repositories/
 │   ├── routers/
@@ -104,136 +85,71 @@ Aven_project/
 └── README.md
 ```
 
-The application separates data models, database access, HTTP endpoints, validation schemas, and business services into dedicated modules.
-
-## 6. Getting Started
+## Getting started
 
 ### Prerequisites
 
-- Python 3.12 or a compatible version.
-- `uv` for Python environment and package management.
-- A PostgreSQL database, such as a Neon development database.
-- Git.
+- Python 3.12 or a compatible version
+- uv
+- PostgreSQL database
+- Git
 
-### Clone the Repository
+### Clone and install
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/Susanwanjiruu/Aven_project.git
 cd Aven_project
-```
-
-Replace the placeholder with the URL of the AVEN repository.
-
-### Create a Virtual Environment
-
-```bash
 uv venv
 source .venv/bin/activate
+uv pip install -r requirements.txt
 ```
 
-On Windows, activate the environment with:
+On Windows PowerShell, activate the environment with:
 
 ```powershell
 .venv\Scripts\Activate.ps1
 ```
 
-### Install Dependencies
+### Configure environment variables
 
-```bash
-uv pip install -r requirements.txt
-```
-
-### Configure Environment Variables
-
-Create a local `.env` file in the project root and configure the variables expected by `app/core/config.py`:
+Create a local `.env` file and provide the configuration required by `app/core/config.py`. The following illustrates the kinds of values used; check the application settings for the exact variable names and required fields.
 
 ```dotenv
-database_url=YOUR_DATABASE_URL
-admin_username=YOUR_ADMIN_USERNAME
-admin_password_hash=YOUR_PASSWORD_HASH
-jwt_secret_key=YOUR_RANDOM_SECRET_KEY
+DATABASE_URL=your_database_url
+JWT_SECRET_KEY=your_random_secret
 ```
 
-These values are placeholders. Configure a valid database connection, generate a secure JWT signing key, and create a password hash using the application's password-hashing implementation.
+Use valid credentials and a securely generated signing key. Never commit real credentials, passwords, tokens, or the `.env` file.
 
-**Never commit real credentials, passwords, signing keys, or the `.env` file to version control.**
-
-### Run the Development Server
+### Run the API
 
 ```bash
 uv run uvicorn main:app --reload
 ```
 
-The API will be available at:
+When running locally, the API is typically available at `http://127.0.0.1:8000`, with interactive documentation at `http://127.0.0.1:8000/docs`.
 
-- API base URL: `http://127.0.0.1:8000`
-- Interactive Swagger documentation: `http://127.0.0.1:8000/docs`
-- OpenAPI schema: `http://127.0.0.1:8000/openapi.json`
+## API workflow
 
-The application uses SQLAlchemy to create missing tables during startup. Database schema evolution should be managed carefully with migrations as the system grows.
+The backend includes workflows for administrator authentication, family registration, child records, journey tracking, monitoring events, and notifications. Consult the running OpenAPI documentation for the current routes and request schemas; the API surface may change as development continues.
 
-## 7. API Endpoints
+## Privacy and safety considerations
 
-The backend provides endpoints for administrator authentication, child listing, and combined family registration.
+Children's location and journey records are sensitive. Any deployment handling real users should include strict access controls, secure transport, appropriate consent and retention policies, monitoring, backups, and thorough security testing. Safety alerts should be explainable and tested against realistic edge cases. This repository should not be treated as a certified child-safety service.
 
-| Method | Endpoint | Purpose |
-|---|---|---|
-| `POST` | `/auth/login` | Authenticate the administrator and obtain an access token |
-| `GET` | `/children/` | List registered children |
-| `POST` | `/admin/registrations/` | Register a parent and child together |
+## Development principles
 
-Protected endpoints use Bearer-token authentication through the HTTP header:
+1. Keep business rules in services rather than route handlers.
+2. Keep database access in repositories.
+3. Validate request data with schemas.
+4. Test authorization and failure paths as well as successful requests.
+5. Keep secrets and real personal data out of Git.
+6. Document new configuration and API behaviour as the project evolves.
 
-```http
-Authorization: Bearer <ACCESS_TOKEN>
-```
+## Project status
 
-Interactive API documentation is available through FastAPI Swagger UI at `/docs`.
+AVEN is a developing project. The feature descriptions explain the platform's intended workflows and documented backend capabilities; they do not imply that every integration is deployed or production-ready.
 
-## 8. Security and Privacy
+## License
 
-Children's journeys and location records are sensitive. AVEN is designed with security and privacy as core requirements.
-
-Key principles include:
-
-- Secure password hashing and token-based authentication.
-- Authentication and authorization for administrative operations.
-- Protection of database credentials and signing keys.
-- Verification of parent contact details.
-- Consent-aware messaging and notification preferences.
-- Restricted access to children's location and journey data.
-- Secure, time-limited map links.
-- Notification delivery tracking and duplicate prevention.
-- Deterministic handling of safety-critical monitoring rules.
-- Appropriate validation, logging, backups, and operational safeguards.
-
-Before production use, all sensitive endpoints, authentication flows, database operations, and privacy controls must be thoroughly tested and reviewed.
-
-## 9. Development and Maintenance
-
-Development follows a modular approach:
-
-1. Define database entities and relationships.
-2. Create Pydantic schemas for request validation and responses.
-3. Implement database operations in repositories.
-4. Apply business rules in services.
-5. Expose functionality through FastAPI routers.
-6. Test success cases, validation errors, authorization failures, and database constraints.
-
-This approach supports incremental development while keeping the codebase organized and maintainable.
-
-## 10. Contributing
-
-AVEN is under active development. Contributions should preserve the layered architecture, follow secure coding practices, and protect sensitive information.
-
-Before submitting changes:
-
-- Test affected endpoints.
-- Avoid committing secrets or personal data.
-- Document new environment variables and dependencies.
-- Validate error handling and authorization.
-- Add tests for new functionality and business rules.
-
-## 11. License
-
-A project license has not yet been selected. Until a license is added, permission to reuse, modify, or redistribute the project should not be assumed.
+No license is currently specified. Until a license is added, reuse and redistribution should not be assumed to be permitted.
